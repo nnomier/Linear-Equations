@@ -1,4 +1,4 @@
-function [L,U,P] = findLU(A)
+function [L,U,P] = decomposition(A)
 % initialize
 U = A;
 %function eye constructs an identity matrix of same size as A
@@ -11,7 +11,7 @@ I = eye(size(A));
 % operation to obtain L & U matrix
 for lv1 = 1:size(A,1)-1     % reference row
     % find index of max value in column
-    [~,index] = max(abs(U(lv1:size(A,1),lv1)));
+    [~,index] = max(double(abs(U(lv1:size(A,1),lv1))));
     
 
     if (index == 1)

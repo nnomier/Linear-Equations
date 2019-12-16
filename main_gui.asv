@@ -22,7 +22,7 @@ function varargout = main_gui(varargin)
 
 % Edit the above text to modify the response to help main_gui
 
-% Last Modified by GUIDE v2.5 16-Dec-2019 20:13:57
+% Last Modified by GUIDE v2.5 16-Dec-2019 18:43:38
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -73,7 +73,25 @@ function varargout = main_gui_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
+% --- Executes on button press in filebutton.
+function filebutton_Callback(hObject, eventdata, handles)
+% hObject    handle to filebutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)file,path] = uigetfile('*.txt');
+[file,path] = uigetfile('*.txt');
 
+if isequal(file,0)
+   disp('User selected Cancel');
+else
+    disp(['User selected ', fullfile(path,file)]);
+    fid = fopen(fullfile(path,file));
+    [equations,init,method]= readFile(fid);
+    [A,B] = MatrixParser(equations);
+    
+    [X]= msolve(A,B);
+
+ 
+end
 
 
 
@@ -215,30 +233,11 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-% --- Executes on button press in filebutton.
-function filebutton_Callback(hObject, eventdata, handles)
-% hObject    handle to filebutton (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)file,path] = uigetfile('*.txt');
-[file,path] = uigetfile('*.txt');
-
-if isequal(file,0)
-   disp('User selected Cancel');
-else
-    disp(['User selected ', fullfile(path,file)]);
-    fid = fopen(fullfile(path,file));
-    [equations,init,method]= readFile(fid,handles);
-%     [A,B] = MatrixParser(equations);
-    
-%     [X]= msolve(A,B);
-
- 
-end
-
 function [A,B] = MatrixParser(equations)
     A = [];
     B = []; 
     syms a b c d e;
+
     [A, B] = equationsToMatrix(equations);
     display(A);
     
@@ -268,9 +267,9 @@ switch get(handles.popupmenu1,'Value')
     case 2
     %Gauss Jordan
     case 3
-    %LU DECOMPOSITION
+     
     case 4
-    %Gauss Seidel
+
    
 end
 
@@ -301,124 +300,3 @@ function popupmenu1_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-
-
-function init0_Callback(hObject, eventdata, handles)
-% hObject    handle to init0 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of init0 as text
-%        str2double(get(hObject,'String')) returns contents of init0 as a double
-
-
-% --- Executes during object creation, after setting all properties.
-function init0_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to init0 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-
-function init4_Callback(hObject, eventdata, handles)
-% hObject    handle to init3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of init3 as text
-%        str2double(get(hObject,'String')) returns contents of init3 as a double
-
-
-% --- Executes during object creation, after setting all properties.
-function init4_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to init3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-
-function init1_Callback(hObject, eventdata, handles)
-% hObject    handle to init1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of init1 as text
-%        str2double(get(hObject,'String')) returns contents of init1 as a double
-
-
-% --- Executes during object creation, after setting all properties.
-function init1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to init1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-
-function init2_Callback(hObject, eventdata, handles)
-% hObject    handle to init2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of init2 as text
-%        str2double(get(hObject,'String')) returns contents of init2 as a double
-
-
-% --- Executes during object creation, after setting all properties.
-function init2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to init2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-
-function init3_Callback(hObject, eventdata, handles)
-% hObject    handle to init3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of init3 as text
-%        str2double(get(hObject,'String')) returns contents of init3 as a double
-
-
-% --- Executes during object creation, after setting all properties.
-function init3_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to init3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-% --- Executes on button press in FileSubmitBtn.
-function FileSubmitBtn_Callback(hObject, eventdata, handles)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)

@@ -1,4 +1,4 @@
-function [X] = msolve(A,B)
+function [X] = LU_solver(A,B)
 % Solves system AX = B for X
 
 %B is represented as [a1;a2;a3]
@@ -33,5 +33,5 @@ for lv1 = size(U,1)-1:-1:1
         X(lv1,1) = X(lv1,1) - (U(lv1,lv2)*X(lv2,1))/U(lv1,lv1);
     end
 end
-
+display(X);
 end
