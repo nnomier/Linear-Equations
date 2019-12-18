@@ -20,21 +20,27 @@ function [equations,init,method] = readFile(fileID,handles)
         elseif (strcmp(type,'Gauss-Seidel'))
             method=4;
         end
+        
         fprintf('number of equations is %d',numberOfEquations);
         fprintf('method is %s',type);
         fprintf('method number is %d',method);
         
         line1=fgetl(fileID);
         line2=fgetl(fileID);
-        line3=fgetl(fileID);
         set(handles.equation1_textBox,'string',line1);
         set(handles.equation2_textBox,'string',line2);
+        
+        if(numberOfEquations==3)
+         line3=fgetl(fileID);
         set(handles.equation3_textBox,'string',line3);
-
-        if(numberOfEquations==4)
+        elseif(numberOfEquations==4)
+        line3=fgetl(fileID);
+        set(handles.equation3_textBox,'string',line3);
         line4=fgetl(fileID);
         set(handles.equation4_textBox,'string',line4);
         elseif(numberOfEquations==5)
+        line3=fgetl(fileID);
+        set(handles.equation3_textBox,'string',line3);
         line4=fgetl(fileID);
         set(handles.equation4_textBox,'string',line4); 
         line5=fgetl(fileID);
@@ -46,15 +52,19 @@ function [equations,init,method] = readFile(fileID,handles)
          celldisp(data);
          x0=data{1}{1};
          x1=data{1}{2};
-         x2=data{1}{3};
          set(handles.init0,'string',x0);
          set(handles.init1,'string',x1);
-         set(handles.init2,'string',x2);
-         
-             if(numberOfEquations==4)
+             if(numberOfEquations==3)
+             x2=data{1}{3};
+             set(handles.init2,'string',x2);
+             elseif(numberOfEquations==4)
+             x2=data{1}{3};
+             set(handles.init2,'string',x2);
              x3=data{1}{4};
              set(handles.init3,'string',x3);
              elseif(numberOfEquations==5)
+             x2=data{1}{3};
+             set(handles.init2,'string',x2);
              x3=data{1}{4};
              x4=data{1}{5};
              set(handles.init3,'string',x3);
@@ -63,5 +73,6 @@ function [equations,init,method] = readFile(fileID,handles)
              
         end
            
-    
+    set(handles.popupmenu1, 'Value', method);
+
 end
