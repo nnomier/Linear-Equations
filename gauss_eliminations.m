@@ -1,9 +1,10 @@
-a= [1 1 1 1
-    1 1 2 2
-    1 2 2 1];
-b = [0
-    0
-    0 ];
+function gauss_eliminations(a,b)
+%a= [1 1 1 1
+ %   1 1 2 2
+  %  1 2 2 1];
+%b = [0
+ %   0
+  %  0 ];
 % syms x y z w
 % %Converting Linear Simultaneous Equations to Matrix form
 % eqns=[-x+2*y+2*z-3*w==-1,
@@ -25,7 +26,7 @@ z=2;% Row operation always starts from 2
 % Shifting Loop for column operation
 for i=1:c-1
     %% Partial Pivoting
-    [x MErow]=max(abs(a(j:m,i)));
+    [x MErow]=max(double( (abs(a(j:m,i)) ))) ;
     % x is the hightest element of i th column
     % MErow is the iteration of getting Maximum element
     MErow=MErow+j-1; % Maximum element is in the MErow th row
@@ -80,3 +81,4 @@ y=linsolve(a,b)
 % end
 % disp('Gauss elimination method:');
 % x
+end

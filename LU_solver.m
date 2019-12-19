@@ -5,7 +5,7 @@ function [X] = LU_solver(A,B)
 %P is a square matrix 
 
 % find LU decomposition
-[L,U,P] = findLU(A);
+[L,U,P] = decompostion(A);
 
 
 % apply permutations to solution vector

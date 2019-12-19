@@ -22,7 +22,7 @@ function varargout = main_gui(varargin)
 
 % Edit the above text to modify the response to help main_gui
 
-% Last Modified by GUIDE v2.5 16-Dec-2019 20:13:57
+% Last Modified by GUIDE v2.5 19-Dec-2019 09:53:11
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -261,16 +261,42 @@ display(input);
 display(size(input));
 [A,B] = MatrixParser(input);
 
+iter = get(handles.iterations,'String');
+tol = get(handles.error,'String');
+
 switch get(handles.popupmenu1,'Value')
-    
+  
     case 1
-    %Gauss Elimination
+    gauss_eliminations(A,B);
     case 2
-    %Gauss Jordan
+    gauss_Jordan(A)
     case 3
-    %LU DECOMPOSITION
+    LU_solver(A,B);
     case 4
-    %Gauss Seidel
+        
+        x =   [ str2double(get(handles.init0,'String')) str2double(get(handles.init1,'String'))  ];
+        n = size(B,1);
+        if( n >= 3)
+            x = [ x str2double(get(handles.init2,'String'))];
+        end
+        if (n >= 4)
+             x = [x str2double(get(handles.init3,'String'))];
+        end
+        if( n >= 5)
+             x = [x str2double(get(handles.init4,'String')) ];
+        end
+        
+        if(isempty(iter))
+            iter = 50;
+        else
+            iter=str2double(iter);
+        end
+        if(isempty(tol))
+            tol = 0.00001;
+        else
+            tol=str2double(tol);
+        end
+         gausSeidel(A, B, x,iter, tol);
    
 end
 
@@ -422,3 +448,49 @@ end
 function FileSubmitBtn_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+
+function error_Callback(hObject, eventdata, handles)
+% hObject    handle to text_error (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of text_error as text
+%        str2double(get(hObject,'String')) returns contents of text_error as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function text_error_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to text_error (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function iterations_Callback(hObject, eventdata, handles)
+% hObject    handle to textI_iteration (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of textI_iteration as text
+%        str2double(get(hObject,'String')) returns contents of textI_iteration as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function textI_iteration_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to textI_iteration (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end

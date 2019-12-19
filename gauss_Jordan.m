@@ -1,6 +1,7 @@
-a = [1 1 2 8
-    -1 -2 3 1
-    3 7 4 10];
+function gauss_Jordan(a)
+%a = [1 1 2 8
+ %   -1 -2 3 1
+  %  3 7 4 10];
 [m,n]=size(a);
 for j=1:m-1
     for z=2:m
@@ -27,3 +28,4 @@ end
 disp('Gauss-Jordan method:');
 a
 x'
+end

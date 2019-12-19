@@ -1,4 +1,4 @@
-function [L,U,P] = decomposition(A)
+function [L,U,P] = decompostion(A)
 % initialize
 U = A;
 %function eye constructs an identity matrix of same size as A
