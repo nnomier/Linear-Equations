@@ -56,5 +56,6 @@ end
 
 % turn into standard L matrix
 L = L + I;
-
+display(L);
+display(U);
 end

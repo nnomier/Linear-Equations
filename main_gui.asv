@@ -260,8 +260,7 @@ input=[eq1;eq2;eq3;eq4;eq5];
 display(input);
 display(size(input));
 [A,B] = MatrixParser(input);
-%augmented Matrix
-a=[A,B];
+
 iter = get(handles.iterations,'String');
 tol = get(handles.error,'String');
 
@@ -270,7 +269,7 @@ switch get(handles.popupmenu1,'Value')
     case 1
     gauss_eliminations(A,B);
     case 2
-    gauss_Jordan(a)
+    gauss_Jordan(A)
     case 3
     LU_solver(A,B);
     case 4
@@ -463,11 +462,11 @@ input=[eq1;eq2;eq3;eq4;eq5];
 display(input);
 display(size(input));
 [A,B] = MatrixParser(input);
-a=[A,B];
+a=
 iter = get(handles.iterations,'String');
 tol = get(handles.error,'String');
 gauss_eliminations(A,B);
-gauss_Jordan(a)
+gauss_Jordan(A)
 LU_solver(A,B);  
 x =   [ str2double(get(handles.init0,'String')) str2double(get(handles.init1,'String'))  ];
 n = size(B,1);

@@ -27,5 +27,5 @@ for s=1:m
 end
 disp('Gauss-Jordan method:');
 a
-x'
+double(x')
 end
