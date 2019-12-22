@@ -1,22 +1,7 @@
 function gauss_eliminations(a,b)
-%a= [1 1 1 1
- %   1 1 2 2
-  %  1 2 2 1];
-%b = [0
- %   0
-  %  0 ];
-% syms x y z w
-% %Converting Linear Simultaneous Equations to Matrix form
-% eqns=[-x+2*y+2*z-3*w==-1,
-%     x+2*z+3*w==1,
-%     6*x+2*y+2*z+4*w==1,
-%     y+z+4*w==2];
-% vars=[ x y z w];
-% % a is the matrix of co-efficient
-% % b is the matrix of constants
-% [a,b]=equationsToMatrix(eqns,vars);
-% % m is the row
-% % c is the column
+
+matA = a;
+matB = b;
 [m,c]=size(a);
 j=1; %j th column
 k=1;%k th row
@@ -24,6 +9,7 @@ n=1;% n th pivoting row
 z=2;% Row operation always starts from 2
 % Forward Elimination
 % Shifting Loop for column operation
+tic
 for i=1:c-1
     %% Partial Pivoting
     [x MErow]=max(double( (abs(a(j:m,i)) ))) ;
@@ -50,35 +36,52 @@ j=j+1;% Changing column after completion of inner loop
 end
 %% Performing Back Substitution
 y=linsolve(a,b)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% y is the matrix of the required result
-% [m,n]=size(a);
-% for j=1:m-1
-%     for z=j+1:m
-%         if a(j,j)==0
-%             t=a(j,:);a(j,:)=a(z,:);
-%             a(z,:)=t;
-%             t1 = b(j);b(j) = b(z);
-%             b(j)=t1;
-%         end
-%     end
-%     for i=j+1:m
-%         a(i,:)=a(i,:)-a(j,:)*(a(i,j)/a(j,j));
-%         b(i) = b(i) - b(j) * (b(i)/a(j,j));
-%     end
-% end
-% b
-% %x=zeros(1,m);
-% x(m) = b(m)/a(m,m);
-% for s=m-1:1
-%     c=0;
-%     
-%     for k=s+1:m
-%         c=c+a(s,k)*x(k);
-%         
-%     end
-%     x(s)= (b(s)-c)/a(s,s);
-% end
-% disp('Gauss elimination method:');
-% x
+
+executionTime = toc;
+
+
+% writhing to file
+fileID = fopen('Gauss_elimination_Output.txt','w');
+
+fprintf(fileID,'%4s\r\n',' Matrix A');
+[v,g]=size(matA);
+
+for i = 1:v
+        for j = 1:g
+            fprintf(fileID,'%08.10f  ',double(matA(i,j)));
+        end
+        fprintf(fileID,'\r\n');   
+    end
+    fprintf(fileID,'%s\r\n','-------------------------------------------------------------------');
+
+fprintf(fileID,'%4s\r\n',' Matrix B');
+[v,g]=size(matB);
+
+for i = 1:v
+        for j = 1:g
+            fprintf(fileID,'%08.10f  ',double(matB(i,j)));
+        end
+        fprintf(fileID,'\r\n');   
+    end
+    fprintf(fileID,'%s\r\n','-------------------------------------------------------------------');
+
+
+% solution y
+[q w] = size(y);
+ fprintf(fileID,'%s\r\n','Solutions');
+    for i = 1:q
+        fprintf(fileID,'%08.10f\r\n',double(y(i,:)));
+    end
+    fprintf(fileID,'%s\r\n','-------------------------------------------------------------------');
+
+fprintf(fileID,'%s%f\r\n','Execution time :',executionTime);    
+
+
+
+
+
+
+
+
+
 end
